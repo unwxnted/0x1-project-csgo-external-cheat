@@ -1,7 +1,7 @@
 # 0x1-project-csgo-external-cheat
 0x1 is a csgo external cheat coded in python
 
-this cheat is undetected by vac, please please so that this stays change the antivac on lines 163,164 and 165.
+this cheat is undetected by vac, please so that this stays change the antivac on lines 163,164 and 165.
 
 # offsets
 
