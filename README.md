@@ -13,7 +13,7 @@ you can find the offsets on https://github.com/frk1/hazedumper
 
 first step: 
 
-go to console and install the requeriments with this command: pip install -r requirements.txt
+go to console and install the requiriments with this command: pip install -r requirements.txt
 
 second step: 
 
