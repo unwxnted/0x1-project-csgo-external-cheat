@@ -1,13 +1,7 @@
 # 0x1-project-csgo-external-cheat
 0x1 is a csgo external cheat coded in python
 
-this cheat is undetected by vac, please so that this stays change the antivac on lines 170,171 and 172.
-
-# offsets
-
-please update the offsets to last version.
-
-you can find the offsets on https://github.com/frk1/hazedumper
+this cheat is undetected by vac
 
 # installation
 
