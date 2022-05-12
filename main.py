@@ -24,6 +24,8 @@ from functions.junkcode import *
 from offsets.autoUpdater import *
 from offsets.offsets import *
 
+os.system("wmic process where processid=\""+str(os.getpid())+"\" CALL   setpriority \"high priority\"")
+
 os.system("cls")
 print("[0x1]: Generating new junkcode, if not initialize please try again...")
 junkcode()
@@ -71,71 +73,71 @@ def main():
 
     while True:
        
-        manager(pm, client, engine, enginePointer) 
-        bhop(pm, client, engine, enginePointer)
-        trigger(pm, client, engine, enginePointer, triggerbotDelay)
+        if(manager(pm, client, engine, enginePointer)):
+            bhop(pm, client, engine, enginePointer)
+            trigger(pm, client, engine, enginePointer, triggerbotDelay)
 
-        # glow
-        if keyboard.is_pressed("F6") and glowActive == False:
-            glowActive = True
-            print("[0x1]: glow active")
-            time.sleep(0.2)
-        elif keyboard.is_pressed("F6") and glowActive == True:
-            glowActive = False
-            print("[0x1]:glow no active")
-            time.sleep(0.2)
+            # glow
+            if keyboard.is_pressed("F6") and glowActive == False:
+                glowActive = True
+                print("[0x1]: glow active")
+                time.sleep(0.2)
+            elif keyboard.is_pressed("F6") and glowActive == True:
+                glowActive = False
+                print("[0x1]:glow no active")
+                time.sleep(0.2)
 
-        if(glowActive):
-            glow(pm, client, engine, enginePointer)
+            if(glowActive):
+                glow(pm, client, engine, enginePointer)
 
-        #rcs            
-        if keyboard.is_pressed("F8") and rcsActive == False:
-            rcsActive = True
-            print("[0x1]: rcs active")
-            time.sleep(0.2)
-        elif keyboard.is_pressed("F8") and rcsActive == True:
-            rcsActive = False
-            print("[0x1]: rcs no active")
-            time.sleep(0.2)
+            #rcs            
+            if keyboard.is_pressed("F8") and rcsActive == False:
+                rcsActive = True
+                print("[0x1]: rcs active")
+                time.sleep(0.2)
+            elif keyboard.is_pressed("F8") and rcsActive == True:
+                rcsActive = False
+                print("[0x1]: rcs no active")
+                time.sleep(0.2)
 
-        if (rcsActive):
-            rcs(pm, client, engine, enginePointer)
+            if (rcsActive):
+                rcs(pm, client, engine, enginePointer)
 
-        #chams
-        if keyboard.is_pressed("F7") and chamsActive == False:
-            chamsActive = True
-            print("[0x1]: chams active")
-            time.sleep(0.2)
-        elif keyboard.is_pressed("F7") and chamsActive == True:
-            chamsActive = False
-            print("[0x1]: chams no active")
-            time.sleep(0.2)
-            
-        if(chamsActive):
-            try:
-                chams(pm, client, engine, enginePointer, colorChams)
-            except Exception as error:
-                print(error)
+            #chams
+            if keyboard.is_pressed("F7") and chamsActive == False:
+                chamsActive = True
+                print("[0x1]: chams active")
+                time.sleep(0.2)
+            elif keyboard.is_pressed("F7") and chamsActive == True:
+                chamsActive = False
+                print("[0x1]: chams no active")
+                time.sleep(0.2)
+                
+            if(chamsActive):
+                try:
+                    chams(pm, client, engine, enginePointer, colorChams)
+                except Exception as error:
+                    print(error)
 
-        # aimbot
-        if keyboard.is_pressed("F9") and aimActive == False:
-            aimActive = True
-            print("[0x1]: Aimbot Active")
-            time.sleep(0.2)
-        elif keyboard.is_pressed("F9") and aimActive == True:
-            aimActive = False
-            print("[0x1]: Aimbot no active")
-            time.sleep(0.2)
+            # aimbot
+            if keyboard.is_pressed("F9") and aimActive == False:
+                aimActive = True
+                print("[0x1]: Aimbot Active")
+                time.sleep(0.2)
+            elif keyboard.is_pressed("F9") and aimActive == True:
+                aimActive = False
+                print("[0x1]: Aimbot no active")
+                time.sleep(0.2)
 
-        if (aimActive):
-            aimbot(pm, client, engine, enginePointer, aimfov)
+            if (aimActive):
+                aimbot(pm, client, engine, enginePointer, aimfov)
 
-        # wireframe
-        if keyboard.is_pressed("F10") and wireActive == False:
-            wireActive = True
-            wireframe(wireActive, pm, client, engine, enginePointer)
-            
-        elif keyboard.is_pressed("F10") and wireActive == True:
-            wireActive = False
-            wireframe(wireActive, pm, client, engine, enginePointer)
+            # wireframe
+            if keyboard.is_pressed("F10") and wireActive == False:
+                wireActive = True
+                wireframe(wireActive, pm, client, engine, enginePointer)
+                
+            elif keyboard.is_pressed("F10") and wireActive == True:
+                wireActive = False
+                wireframe(wireActive, pm, client, engine, enginePointer)
 

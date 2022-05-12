@@ -1,6 +1,5 @@
 import pymem
 import pymem.process
-import time
 from offsets.offsets import *
 
 def rcs(pm, client, engine, enginePointer):
@@ -37,4 +36,3 @@ def rcs(pm, client, engine, enginePointer):
         pm.write_float(enginePointer + dwClientState_ViewAngles + 0x4, new_view_angles_y)
     else:
         old_aim_punch_x = old_aim_punch_y = 0
-        time.sleep(0.001)

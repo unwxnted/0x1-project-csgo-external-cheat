@@ -17,3 +17,5 @@ def manager(pm, client, engine, enginePointer):
         except:
             print("[0x1]: on menu")
             time.sleep(1)
+    
+    return 1
