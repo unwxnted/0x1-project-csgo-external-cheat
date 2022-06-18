@@ -20,6 +20,7 @@ from functions.chams import *
 from functions.rcs import *
 from functions.junkcode import *
 from functions.fakelag import *
+from functions.fovChanger import *
 
 #offsets
 from offsets.autoUpdater import *
@@ -40,7 +41,8 @@ rcsActive = False
 aimActive = False
 wireActive = False
 fakelagActive = False
-
+fovActive = False
+aspectRatioActive = False
 
 def main():
     try:
@@ -59,6 +61,8 @@ def main():
         global aimActive
         global wireActive
         global fakelagActive
+        global fovActive
+        global aspectRatioActive
 
         os.system("cls")
         print("Welcome to 0x1")
@@ -66,13 +70,15 @@ def main():
         print("\n \nHotkeys:")
         print("----------[Hold]----------")
         print("Bhop: Space")
-        print("TriggerBot: Alt")
+        print("TriggerBot: Alt\n")
         print("----------[Toggle]----------")
+        print("FovChanger: F1")
         print("Glow: F6")
         print("Chams visible: F7")
         print("RCS: F8")
         print("Aimbot: F9, C key to use")
         print("Wireframe: F10")
+        print("FakeLag: F11")
         print("\n----------[Console]----------")
         print("\n \nLogs:")
 
@@ -94,6 +100,19 @@ def main():
 
                 if(fakelagActive):
                     fakelag(fakelagActive, fakelagDelay,pm, client, engine, enginePointer)
+
+                # FovChanger 
+                if(keyboard.is_pressed("F1") and fovActive == False):
+                    fovActive = True
+                    time.sleep(0.2)
+                    print("[0x1]: Fov active")
+                elif keyboard.is_pressed("F1") and fovActive == True:
+                    fovActive = False
+                    time.sleep(0.2)
+                    print("[0x1]: Fov no active")
+                
+                if(fovActive):
+                    fovChanger(pm, client, engine, enginePointer, fovValue)
 
                 # glow
                 if keyboard.is_pressed("F6") and glowActive == False:
@@ -133,7 +152,7 @@ def main():
                     
                 if(chamsActive):
                     try:
-                        chams(pm, client, engine, enginePointer, colorChams)
+                        chams(pm, client, engine, enginePointer, colorChams, chamsbrightness)
                     except Exception as error:
                         print(error)
 
@@ -159,8 +178,7 @@ def main():
                     wireActive = False
                     wireframe(wireActive, pm, client, engine, enginePointer)
     except Exception as error:
-        main()
+        print(error)
 
 if __name__ == "__main__":
     main()
-

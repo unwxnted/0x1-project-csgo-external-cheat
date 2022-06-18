@@ -2,7 +2,12 @@ import pymem
 import pymem.process
 from offsets.offsets import *
 
-def chams(pm, client, engine, enginePointer, color):
+def chams(pm, client, engine, enginePointer, color, chamsbrightness):
+    if(chamsbrightness):
+        buf = 1084227584
+        point = pm.read_int(engine + model_ambient_min - 44)
+        xored = buf ^ point
+        pm.write_int(engine + model_ambient_min, xored)
     for i in range(32):
         entity = pm.read_int(client + dwEntityList + i * 0x10)
 
@@ -17,6 +22,6 @@ def chams(pm, client, engine, enginePointer, color):
                 pm.write_int(entity + m_clrRender, (color[0]))
                 pm.write_int(entity + m_clrRender + 0x1, (color[1]))
                 pm.write_int(entity + m_clrRender + 0x2, (color[2]))
-                                     
+
         else:
             pass
