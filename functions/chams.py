@@ -2,9 +2,10 @@ import pymem
 import pymem.process
 from offsets.offsets import *
 
+buf = 1084227584
+
 def chams(pm, client, engine, enginePointer, color, chamsbrightness):
     if(chamsbrightness):
-        buf = 1084227584
         point = pm.read_int(engine + model_ambient_min - 44)
         xored = buf ^ point
         pm.write_int(engine + model_ambient_min, xored)

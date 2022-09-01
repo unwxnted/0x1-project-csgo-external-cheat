@@ -21,6 +21,7 @@ from functions.rcs import *
 from functions.junkcode import *
 from functions.fakelag import *
 from functions.fovChanger import *
+from functions.noFlash import *
 
 #offsets
 from offsets.autoUpdater import *
@@ -43,6 +44,7 @@ wireActive = False
 fakelagActive = False
 fovActive = False
 aspectRatioActive = False
+noFlashActive = False
 
 def main():
     try:
@@ -62,7 +64,7 @@ def main():
         global wireActive
         global fakelagActive
         global fovActive
-        global aspectRatioActive
+        global noFlashActive
 
         os.system("cls")
         print("Welcome to 0x1")
@@ -73,6 +75,7 @@ def main():
         print("TriggerBot: Alt\n")
         print("----------[Toggle]----------")
         print("FovChanger: F1")
+        print("NoFlash: F2")
         print("Glow: F6")
         print("Chams visible: F7")
         print("RCS: F8")
@@ -112,7 +115,26 @@ def main():
                     print("[0x1]: Fov no active")
                 
                 if(fovActive):
-                    fovChanger(pm, client, engine, enginePointer, fovValue)
+                    fovChanger(pm, client, engine, enginePointer, fovValue, True)
+                else:
+                    fovChanger(pm, client, engine, enginePointer, fovValue, False)
+                
+
+                # NoFlash
+
+                if(keyboard.is_pressed("F2") and noFlashActive == False):
+                    noFlashActive = True
+                    print("[0x1]: NoFlash active")
+                    time.sleep(0.2)
+                elif (keyboard.is_pressed("F2") and noFlashActive == True):
+                    noFlashActive = False
+                    print("[0x1]: NoFlash no active")
+                    time.sleep(0.2)
+                
+                if(noFlashActive):
+                    noFlash(pm, client, engine, enginePointer, True)
+                else:
+                    noFlash(pm, client, engine, enginePointer, False)
 
                 # glow
                 if keyboard.is_pressed("F6") and glowActive == False:
@@ -167,7 +189,7 @@ def main():
                     time.sleep(0.2)
 
                 if (aimActive):
-                    aimbot(pm, client, engine, enginePointer, aimfov)
+                    aimbot(pm, client, engine, enginePointer, aimfov, bone, autoShot)
 
                 # wireframe
                 if keyboard.is_pressed("F10") and wireActive == False:
@@ -179,6 +201,7 @@ def main():
                     wireframe(wireActive, pm, client, engine, enginePointer)
     except Exception as error:
         print(error)
+        main()
 
 if __name__ == "__main__":
     main()

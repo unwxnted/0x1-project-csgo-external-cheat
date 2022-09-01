@@ -52,9 +52,13 @@ def calcangle(localpos1, localpos2, localpos3, enemypos1, enemypos2, enemypos3):
     return x,y
 
 
-def aimbot(pm, client, engine, enginePointer, aimfov):
+def aimbot(pm, client, engine, enginePointer, aimfov, bone, autoShot):
     player = pm.read_int(client + dwLocalPlayer)
     localTeam = pm.read_int(player + m_iTeamNum)
+    entity_id = pm.read_int(player + m_iCrosshairId)
+    entity = pm.read_int(client + dwEntityList + (entity_id - 1) * 0x10)
+    entity_team = pm.read_int(entity + m_iTeamNum)
+
 
     target = None
     olddistx = 111111111111
@@ -96,8 +100,12 @@ def aimbot(pm, client, engine, enginePointer, aimfov):
                 if target and target_hp > 0 and not target_dormant:
                     x, y = calcangle(localpos1, localpos2, localpos3, target_x, target_y, target_z)
                     normalize_x, normalize_y = normalizeAngles(x, y)
-
                     pm.write_float(enginePointer + dwClientState_ViewAngles, normalize_x)
                     pm.write_float(enginePointer + dwClientState_ViewAngles + 0x4, normalize_y)
+                    if(autoShot):
+                        if( entity_id > 0 and entity_id <= 64 and localTeam != entity_team):
+                            pm.write_int(client + dwForceAttack, 6)
+                        
+
 
     
