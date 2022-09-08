@@ -22,6 +22,7 @@ from functions.junkcode import *
 from functions.fakelag import *
 from functions.fovChanger import *
 from functions.noFlash import *
+from functions.antiAim import *
 
 #offsets
 from offsets.autoUpdater import *
@@ -45,6 +46,9 @@ fakelagActive = False
 fovActive = False
 aspectRatioActive = False
 noFlashActive = False
+antiAimActive = False
+
+orginView = 0.0
 
 def main():
     try:
@@ -65,6 +69,8 @@ def main():
         global fakelagActive
         global fovActive
         global noFlashActive
+        global antiAimActive
+        global orginView
 
         os.system("cls")
         print("Welcome to 0x1")
@@ -76,6 +82,7 @@ def main():
         print("----------[Toggle]----------")
         print("FovChanger: F1")
         print("NoFlash: F2")
+        print("AntiAim: F3")
         print("Glow: F6")
         print("Chams visible: F7")
         print("RCS: F8")
@@ -96,13 +103,32 @@ def main():
                     fakelagActive = True
                     print("[0x1]: Fakelag active")
                     time.sleep(0.2)
-                elif keyboard.is_pressed("F6") and fakelagActive == True:
+                elif keyboard.is_pressed("F11") and fakelagActive == True:
                     fakelagActive = False
                     print("[0x1]:Fakelag no active")
                     time.sleep(0.2)
 
                 if(fakelagActive):
                     fakelag(fakelagActive, fakelagDelay,pm, client, engine, enginePointer)
+
+                #antiAim
+                if keyboard.is_pressed("F3") and antiAimActive == False:
+                    antiAimActive = True
+                    print("[0x1]: antiAim active")
+                    player = pm.read_int(client + dwLocalPlayer)
+                    orginView = localpos_y_angles = pm.read_float(enginePointer + dwClientState_ViewAngles + 0x4)
+                    time.sleep(0.2)
+                elif keyboard.is_pressed("F3") and antiAimActive == True:
+                    antiAimActive = False
+                    print("[0x1]:antiAim no active")
+                    time.sleep(0.2)
+
+                if(antiAimActive):
+                    antiAim(pm, client, engine, enginePointer, orginView)
+                else:
+                    player = pm.read_int(client + dwLocalPlayer)
+                    pm.write_int(player + m_iObserverMode, 0)
+
 
                 # FovChanger 
                 if(keyboard.is_pressed("F1") and fovActive == False):
@@ -115,10 +141,7 @@ def main():
                     print("[0x1]: Fov no active")
                 
                 if(fovActive):
-                    fovChanger(pm, client, engine, enginePointer, fovValue, True)
-                else:
-                    fovChanger(pm, client, engine, enginePointer, fovValue, False)
-                
+                    fovChanger(pm, client, engine, enginePointer, fovValue)
 
                 # NoFlash
 
@@ -202,6 +225,7 @@ def main():
     except Exception as error:
         print(error)
         main()
+
 
 if __name__ == "__main__":
     main()
