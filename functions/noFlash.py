@@ -8,5 +8,3 @@ def noFlash(pm, client, engine, enginePointer, status):
     flash_value = player + m_flFlashMaxAlpha
     if(status):
         pm.write_float(flash_value, float(0))
-    else:
-        pm.write_float(flash_value, float(255))

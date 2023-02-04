@@ -23,6 +23,5 @@ def chams(pm, client, engine, enginePointer, color, chamsbrightness):
                 pm.write_int(entity + m_clrRender, (color[0]))
                 pm.write_int(entity + m_clrRender + 0x1, (color[1]))
                 pm.write_int(entity + m_clrRender + 0x2, (color[2]))
-
         else:
             pass

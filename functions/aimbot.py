@@ -1,6 +1,8 @@
 import pymem
 import pymem.process
 import keyboard
+import time
+import mouse
 from offsets.offsets import *
 import math
 
@@ -52,7 +54,7 @@ def calcangle(localpos1, localpos2, localpos3, enemypos1, enemypos2, enemypos3):
     return x,y
 
 
-def aimbot(pm, client, engine, enginePointer, aimfov, bone, autoShot):
+def aimbot(pm, client, engine, enginePointer, aimfov, bone, autoShot, aimKey, aimDelay):
     player = pm.read_int(client + dwLocalPlayer)
     localTeam = pm.read_int(player + m_iTeamNum)
     entity_id = pm.read_int(player + m_iCrosshairId)
@@ -76,7 +78,6 @@ def aimbot(pm, client, engine, enginePointer, aimfov, bone, autoShot):
             except:
                 print("no players...")
                     
-
             if localTeam != entity_team_id and entity_hp > 0:
                 entity_bones = pm.read_int(entity + m_dwBoneMatrix)
                 localpos_x_angles = pm.read_float(enginePointer + dwClientState_ViewAngles)
@@ -96,16 +97,18 @@ def aimbot(pm, client, engine, enginePointer, aimfov, bone, autoShot):
                     olddistx, olddisty = newdist_x, newdist_y
                     target, target_hp, target_dormant = entity, entity_hp, entity_dormant
                     target_x, target_y, target_z = entitypos_x, entitypos_y, entitypos_z
-            if keyboard.is_pressed("c") and player:
+            if keyboard.is_pressed(aimKey) and player:
                 if target and target_hp > 0 and not target_dormant:
                     x, y = calcangle(localpos1, localpos2, localpos3, target_x, target_y, target_z)
                     normalize_x, normalize_y = normalizeAngles(x, y)
+                    pm.write_uchar(engine + dwbSendPackets, 0)
                     pm.write_float(enginePointer + dwClientState_ViewAngles, normalize_x)
+                    mouse.move(int(normalize_x), int(normalize_y), absolute=False, duration=aimDelay)
                     pm.write_float(enginePointer + dwClientState_ViewAngles + 0x4, normalize_y)
+                    pm.write_uchar(engine + dwbSendPackets, 1)
                     if(autoShot):
                         if( entity_id > 0 and entity_id <= 64 and localTeam != entity_team):
-                            pm.write_int(client + dwForceAttack, 6)
+                            pm.write_uchar(engine + dwbSendPackets, 0)
+                            mouse.click()
+                            pm.write_uchar(engine + dwbSendPackets, 1)
                         
-
-
-    

@@ -1,5 +1,6 @@
 import pymem
 import pymem.process
+import mouse
 from offsets.offsets import *
 
 def rcs(pm, client, engine, enginePointer):
@@ -33,6 +34,7 @@ def rcs(pm, client, engine, enginePointer):
         old_aim_punch_y = Punch_y * float(2)
 
         pm.write_float(enginePointer + dwClientState_ViewAngles, new_view_angles_x)
+        mouse.move(int(new_view_angles_x), int(new_view_angles_y), absolute=False, duration=0.001)
         pm.write_float(enginePointer + dwClientState_ViewAngles + 0x4, new_view_angles_y)
     else:
         old_aim_punch_x = old_aim_punch_y = 0
